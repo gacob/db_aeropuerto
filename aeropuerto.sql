@@ -4,37 +4,50 @@ create database aeropuerto;
 
 use aeropuerto;
 
-create table Marca(
+/*ALTER TABLE Modelos drop foreign key models ;
+ALTER TABLE Aviones DROP FOREIGN KEY A1;
+ALTER TABLE Aviones DROP FOREIGN KEY A2;
+ALTER TABLE Salidas DROP FOREIGN KEY s1;
+ALTER TABLE Llegadas DROP FOREIGN KEY l1;
+ALTER TABLE Vuelo DROP FOREIGN KEY v1;
+ALTER TABLE Vuelo DROP FOREIGN KEY v2;
+ALTER TABLE Vuelo DROP FOREIGN KEY v3;
+ALTER TABLE Ticket DROP FOREIGN KEY T1;
+ALTER TABLE Ticket DROP FOREIGN KEY T2;*/
+
+
+
+create table if not exists Marca(
 Id int auto_increment  primary key,
 Nombre varchar(30)
 
 );
 
-create table Modelos (
+create table if not exists Modelos (
 Id int auto_increment primary key,
 Nombre varchar(30),
 Marca int,
-FOREIGN KEY (Marca) REFERENCES Marca(Id)
+CONSTRAINT models FOREIGN KEY (Marca) REFERENCES Marca(Id)
 );
 
-create table Aerolineas(
+create table if not exists Aerolineas(
 Id int auto_increment PRIMARY KEY,
 Nombre varchar(30)
 
 );
 
-create table Aviones(
+create table if not exists Aviones(
 Id int auto_increment ,
 Nombre varchar(30),
 IdModelo int,
 IdAerolinea int,
 PRIMARY KEY (Id,IdAerolinea),
-FOREIGN KEY (IdModelo) REFERENCES Modelos(Id),
-FOREIGN KEY (IdAerolinea) REFERENCES Aerolineas(Id)
+CONSTRAINT A1 FOREIGN KEY (IdModelo) REFERENCES Modelos(Id),
+CONSTRAINT A2 FOREIGN KEY (IdAerolinea) REFERENCES Aerolineas(Id)
 );
 
 
-Create table Pasajeros (
+create table if not exists Pasajeros (
 Id INT auto_increment PRIMARY KEY,
 Nombre varchar(30),
 Apellido varchar (30),
@@ -43,45 +56,45 @@ FechaDeNacimiento date
 
 );
 
-CREATE TABLE Aeropuertos(
+create table if not exists Aeropuertos(
 Id int auto_increment PRIMARY KEY,
 Nombre VARCHAR(30),
 Ciudad varchar(30)
 );
 
-CREATE TABLE Salidas(
+create table if not exists Salidas(
 Id int auto_increment Primary key,
 IdAeropuerto int,
 Fecha date,
-FOREIGN KEY (IdAeropuerto) REFERENCES Aeropuertos(Id)
+CONSTRAINT s1 FOREIGN KEY (IdAeropuerto) REFERENCES Aeropuertos(Id)
 
 );
 
-Create table Llegadas (
+create table if not exists Llegadas (
 Id int Primary key,
 IdAeropuerto int,
 Fecha date,
-FOREIGN KEY (IdAeropuerto) REFERENCES Aeropuertos(Id)
+CONSTRAINT l1 FOREIGN KEY (IdAeropuerto) REFERENCES Aeropuertos(Id)
 
 );
 
-CREATE TABLE Vuelo(
+create table if not exists Vuelo(
 Id int auto_increment PRIMARY KEY,
 IdSalida int,
 IdLlegada int,
 IdAvion int,
-FOREIGN KEY (IdSalida) REFERENCES Salidas(Id),
-FOREIGN KEY (IdLlegada) REFERENCES Llegadas(Id),
-FOREIGN KEY (IdAvion) REFERENCES Aviones(Id)
+CONSTRAINT v1 FOREIGN KEY (IdSalida) REFERENCES Salidas(Id),
+CONSTRAINT v2 FOREIGN KEY (IdLlegada) REFERENCES Llegadas(Id),
+CONSTRAINT v3 FOREIGN KEY (IdAvion) REFERENCES Aviones(Id)
 
 );
 
-Create table Ticket(
+create table if not exists Ticket(
 Id int auto_increment PRIMARY KEY,
 IdPasajero int,
 IdVuelo int,
-FOREIGN KEY (IdPasajero) REFERENCES Pasajeros(Id),
-FOREIGN KEY (IdVuelo) REFERENCES Vuelo(Id)
+CONSTRAINT T1 FOREIGN KEY (IdPasajero) REFERENCES Pasajeros(Id),
+CONSTRAINT T2 FOREIGN KEY (IdVuelo) REFERENCES Vuelo(Id)
 
 );
 
