@@ -70,8 +70,8 @@ FechaDeNacimiento date
 
 create table if not exists Aeropuertos(
 Id int auto_increment PRIMARY KEY,
-Nombre VARCHAR(30),
-Ciudad varchar(30)
+Nombre VARCHAR(100),
+Ciudad varchar(50)
 );
 
 create table if not exists Salidas(
