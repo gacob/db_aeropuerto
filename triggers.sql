@@ -41,3 +41,18 @@ BEGIN
     WHERE Id = OLD.IdVuelo;
 END//
 DELIMITER ;
+
+DROP TRIGGER IF EXISTS actualizar_aviones_por_aerolinea;
+DELIMITER //
+
+CREATE TRIGGER actualizar_aviones_por_aerolinea_trigger
+AFTER INSERT ON Aviones
+FOR EACH ROW
+BEGIN
+    DECLARE aerolinea_nombre VARCHAR(50);
+    
+    SELECT Nombre INTO aerolinea_nombre FROM Aerolineas WHERE Id = NEW.IdAerolinea;
+    
+    CALL aviones_por_aerolinea(aerolinea_nombre);
+END//
+DELIMITER ;
