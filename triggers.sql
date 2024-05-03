@@ -26,7 +26,7 @@ BEGIN
         WHERE IdVuelo = NEW.IdVuelo
     )
     WHERE Id = NEW.IdVuelo;
-END$$
+END//
 
 CREATE TRIGGER actualizar_asientos_eliminar
 AFTER DELETE ON Ticket
